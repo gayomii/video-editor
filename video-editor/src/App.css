@@ -8,3 +8,67 @@ body {
   min-height: 100vh;
   margin: 0px;
 }
+
+#root {
+  width: 100%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ececec;
+  margin-bottom: 24px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.logo {
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* MAIN */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  gap: 10px;
+}
+
+.upload-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.video-upload-img {
+  width: 60vw;
+  cursor: pointer;
+}
+
+.video-upload-input {
+  display: none;
+}
+
+/* FOOTER */
+footer {
+  background-color: #434343;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+/* VIDEO PLAYER */
+.video-player {
+  width: 60vw;
+}

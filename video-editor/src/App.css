@@ -57,10 +57,10 @@ main {
 .upload-layout {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .video-upload-img {
-  width: 60vw;
   cursor: pointer;
 }
 
@@ -78,5 +78,5 @@ footer {
 
 /* VIDEO PLAYER */
 .video-player {
-  width: 60vw;
+  width: 100%;
 }

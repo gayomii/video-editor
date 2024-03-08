@@ -1,15 +1,15 @@
 import React, { useReducer } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import 'video-react/dist/video-react.css';
-
 import './App.css';
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 import VideoPlaceholder from './components/VideoPlaceholder';
 import VideoPlayer from './components/VideoPlayer';
 import MultiRangeSlider from './components/MultiRangeSlider';
-
-import Button from '@mui/material/Button';
+import CustomButton from './components/CustomButton';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -29,6 +29,19 @@ function App() {
     <div className="App">
       <Header></Header>
       <main>
+        <div className="main-header-container">
+          <h2>Video Edit</h2>
+          {!videoFile ? (
+            ''
+          ) : (
+            <CustomButton
+              _onClick={() => dispatch({ type: 'DELETE_FILE' })}
+              type={'contained'}
+              buttonName="Delete"
+              startIcon={<DeleteIcon />}
+            />
+          )}
+        </div>
         {!videoFile ? (
           <VideoPlaceholder
             _onChange={file => {
@@ -38,12 +51,6 @@ function App() {
         ) : (
           // TODO: 컴포넌트 분리
           <>
-            <Button
-              onClick={() => dispatch({ type: 'DELETE_FILE' })}
-              variant="contained"
-            >
-              Delete
-            </Button>
             <VideoPlayer videoFile={videoFile} />
             <MultiRangeSlider
               min={0}

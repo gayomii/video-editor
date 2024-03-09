@@ -36,7 +36,7 @@ function App() {
       <VideoFileDispatchContext.Provider value={{ addFile, deleteFile }}>
         <div className="App">
           <Header></Header>
-          <VideoEditorMain videoFile={videoFile}></VideoEditorMain>
+          <VideoEditorMain></VideoEditorMain>
           <Footer></Footer>
         </div>
       </VideoFileDispatchContext.Provider>

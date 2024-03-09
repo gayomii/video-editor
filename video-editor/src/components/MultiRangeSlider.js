@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './multiRangeSlider.css';
 
-const MultiRangeSliderTest = () => {
+const MultiRangeSliderTest = ({ onSliderChange }) => {
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(100);
   const range = useRef(null);
@@ -11,6 +11,7 @@ const MultiRangeSliderTest = () => {
   useEffect(() => {
     const value = Math.min(parseInt(minVal), parseInt(maxVal) - 1);
     setMinVal(value);
+    onSliderChange([minVal, maxVal]);
 
     if (range.current) {
       thumbLeft.current.style.left = `${value}%`;
@@ -21,6 +22,7 @@ const MultiRangeSliderTest = () => {
   useEffect(() => {
     const value = Math.max(parseInt(minVal) + 1, parseInt(maxVal));
     setMaxVal(value);
+    onSliderChange([minVal, maxVal]);
 
     if (range.current) {
       thumbRight.current.style.right = `${100 - value}%`;

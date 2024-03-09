@@ -15,6 +15,9 @@ const VideoEditorMain = () => {
   const videoFile = useContext(VideoFileContext);
   const { addFile, deleteFile } = useContext(VideoFileDispatchContext);
 
+  const [videoPlayer, setVideoPlayer] = useState();
+  const [videoPlayerState, setVideoPlayerState] = useState();
+  const [sliderValues, setSliderValues] = useState([0, 100]);
   return (
     <main>
       <div className="main-header-container">
@@ -41,9 +44,7 @@ const VideoEditorMain = () => {
         <>
           <VideoPlayer videoFile={videoFile} />
           <MultiRangeSlider
-            min={0}
-            max={100}
-            onChange={() => console.log('onChange')}
+            onSliderChange={([min, max]) => setSliderValues([min, max])}
           />
           <div className="button-container">
             <CustomButton

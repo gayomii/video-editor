@@ -60,12 +60,22 @@ main {
   width: 100%;
 }
 
-.video-upload-img {
+.upload-layout label {
   cursor: pointer;
+  width: 100%;
+}
+
+.video-upload-img {
+  width: 100%;
 }
 
 .video-upload-input {
   display: none;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
 }
 
 /* FOOTER */

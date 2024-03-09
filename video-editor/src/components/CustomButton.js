@@ -1,8 +1,8 @@
 import Button from '@mui/material/Button';
 
-const CustomButton = ({ _onClick, type, buttonName, startIcon }) => {
+const CustomButton = ({ onClick, type, buttonName, startIcon }) => {
   return (
-    <Button startIcon={startIcon} onClick={_onClick} variant={type}>
+    <Button startIcon={startIcon} onClick={onClick} variant={type}>
       {buttonName}
     </Button>
   );

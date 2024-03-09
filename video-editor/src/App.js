@@ -1,15 +1,10 @@
 import React, { useReducer } from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
 
-import 'video-react/dist/video-react.css';
 import './App.css';
 
 import Header from './components/Header';
 import Footer from './components/Footer';
-import VideoPlaceholder from './components/VideoPlaceholder';
-import VideoPlayer from './components/VideoPlayer';
-import MultiRangeSlider from './components/MultiRangeSlider';
-import CustomButton from './components/CustomButton';
+import VideoEditorMain from './components/VideoEditorMain';
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -22,46 +17,30 @@ const reducer = (state, action) => {
   }
 };
 
+export const VideoFileContext = React.createContext();
+export const VideoFileDispatchContext = React.createContext();
+
 function App() {
   const [videoFile, dispatch] = useReducer(reducer, null);
 
+  const addFile = file => {
+    dispatch({ type: 'ADD_FILE', newItem: file });
+  };
+
+  const deleteFile = () => {
+    dispatch({ type: 'DELETE_FILE' });
+  };
+
   return (
-    <div className="App">
-      <Header></Header>
-      <main>
-        <div className="main-header-container">
-          <h2>Video Edit</h2>
-          {!videoFile ? (
-            ''
-          ) : (
-            <CustomButton
-              _onClick={() => dispatch({ type: 'DELETE_FILE' })}
-              type={'contained'}
-              buttonName="Delete"
-              startIcon={<DeleteIcon />}
-            />
-          )}
+    <VideoFileContext.Provider value={videoFile}>
+      <VideoFileDispatchContext.Provider value={{ addFile, deleteFile }}>
+        <div className="App">
+          <Header></Header>
+          <VideoEditorMain videoFile={videoFile}></VideoEditorMain>
+          <Footer></Footer>
         </div>
-        {!videoFile ? (
-          <VideoPlaceholder
-            _onChange={file => {
-              dispatch({ type: 'ADD_FILE', newItem: file });
-            }}
-          />
-        ) : (
-          // TODO: 컴포넌트 분리
-          <>
-            <VideoPlayer videoFile={videoFile} />
-            <MultiRangeSlider
-              min={0}
-              max={100}
-              onChange={() => console.log('onChange')}
-            />
-          </>
-        )}
-      </main>
-      <Footer></Footer>
-    </div>
+      </VideoFileDispatchContext.Provider>
+    </VideoFileContext.Provider>
   );
 }
 

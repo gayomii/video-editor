@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import 'video-react/dist/video-react.css';
 import { VideoFileContext, VideoFileDispatchContext } from '../App';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -12,13 +13,25 @@ import MultiRangeSlider from './MultiRangeSlider';
 import { sliderValueToVideoTime } from '../util/sliderValueToVideoTime';
 import VideoConversionButton from './VideoConversionButton';
 
+const ffmpeg = new FFmpeg();
+
 const VideoEditorMain = () => {
   const videoFile = useContext(VideoFileContext);
   const { addFile, deleteFile } = useContext(VideoFileDispatchContext);
 
+  const [ffmpegLoaded, setFfmpegLoaded] = useState(false);
   const [videoPlayer, setVideoPlayer] = useState();
   const [videoPlayerState, setVideoPlayerState] = useState();
   const [sliderValues, setSliderValues] = useState([0, 100]);
+
+  useEffect(() => {
+    async function loadFFmpeg() {
+      await ffmpeg.load();
+    }
+
+    loadFFmpeg();
+    setFfmpegLoaded(true);
+  }, []);
 
   useEffect(() => {
     const min = sliderValues[0];
@@ -70,7 +83,14 @@ const VideoEditorMain = () => {
           <MultiRangeSlider
             onSliderChange={([min, max]) => setSliderValues([min, max])}
           />
-          <VideoConversionButton />
+          {ffmpegLoaded && (
+            <VideoConversionButton
+              ffmpeg={ffmpeg}
+              sliderValues={sliderValues}
+              videoPlayerState={videoPlayerState}
+              videoFile={videoFile}
+            />
+          )}
         </>
       )}
     </main>

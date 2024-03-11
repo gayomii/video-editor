@@ -12,6 +12,8 @@ const VideoConversionButton = ({
   sliderValues,
   videoFile,
   videoPlayerState,
+  onConversionStart,
+  onConversionEnd,
 }) => {
   const writeFile = async inputFileName => {
     return await ffmpeg.writeFile(
@@ -36,7 +38,8 @@ const VideoConversionButton = ({
   };
 
   const convertToGif = async () => {
-    // TODO: 파일 변환 & 다운로드 진행 시 Loading 모달 창
+    onConversionStart();
+
     const inputFileName = 'input.mp4';
     const outputFileName = 'output.gif';
 
@@ -61,11 +64,13 @@ const VideoConversionButton = ({
     );
 
     downloadFile(gifURL);
+    onConversionEnd();
   };
 
   const onCutTheVideo = async () => {
-    // TODO: 파일 변환 & 다운로드 진행 시 Loading 모달 창
     // BUG: 비디오 내보내기 시 처음 2초 정도 화면이 안보임
+    onConversionStart();
+
     const inputFileName = 'input.mp4';
     const outputFileName = 'output.mp4';
 
@@ -90,10 +95,12 @@ const VideoConversionButton = ({
     );
 
     downloadFile(dataURL);
+    onConversionEnd();
   };
 
   const onExportAudio = async () => {
-    // TODO: 파일 변환 & 다운로드 진행 시 Loading 모달 창
+    onConversionStart();
+
     const inputFileName = 'input.mp4';
     const outputFileName = 'output.mp3';
 
@@ -117,6 +124,7 @@ const VideoConversionButton = ({
     );
 
     downloadFile(dataURL);
+    onConversionEnd();
   };
 
   return (

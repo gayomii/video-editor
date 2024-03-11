@@ -32,11 +32,6 @@ const VideoPlayer = ({ onPlayerChange, onPlayerStateChange }) => {
         <LoadingSpinner />
         <ControlBar disableCompletely></ControlBar>
       </Player>
-      {/* TEST */}
-      <div>
-        <p>총 재생 시간: {playerState?.duration}</p>
-        <p>현재 재생 시간: {playerState?.currentTime}</p>
-      </div>
     </div>
   );
 };

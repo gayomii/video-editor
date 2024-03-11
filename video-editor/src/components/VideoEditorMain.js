@@ -4,14 +4,17 @@ import { VideoFileContext, VideoFileDispatchContext } from '../App';
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 
 import DeleteIcon from '@mui/icons-material/Delete';
+import ContentCutIcon from '@mui/icons-material/ContentCut';
 
 import CustomButton from './CustomButton';
 import VideoPlaceholder from './VideoPlaceholder';
 import VideoPlayer from './VideoPlayer';
 import MultiRangeSlider from './MultiRangeSlider';
+import LoadingModal from './LoadingModal';
 
 import { sliderValueToVideoTime } from '../util/sliderValueToVideoTime';
 import VideoConversionButton from './VideoConversionButton';
+import ToastBox from './ToastBox';
 
 const ffmpeg = new FFmpeg();
 
@@ -23,6 +26,8 @@ const VideoEditorMain = () => {
   const [videoPlayer, setVideoPlayer] = useState();
   const [videoPlayerState, setVideoPlayerState] = useState();
   const [sliderValues, setSliderValues] = useState([0, 100]);
+  const [processing, setProcessing] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
   useEffect(() => {
     async function loadFFmpeg() {
@@ -54,46 +59,84 @@ const VideoEditorMain = () => {
   }, [videoPlayerState]);
 
   return (
-    <main>
-      <div className="main-header-container">
-        <h2>Video Edit</h2>
-        {videoFile && (
-          <CustomButton
-            onClick={deleteFile}
-            type={'contained'}
-            buttonName="Delete"
-            startIcon={<DeleteIcon />}
-          />
-        )}
-      </div>
-      {!videoFile ? (
-        <VideoPlaceholder
-          _onChange={file => {
-            addFile(file);
-          }}
-        />
-      ) : (
-        <>
-          <VideoPlayer
-            onPlayerChange={player => setVideoPlayer(player)}
-            onPlayerStateChange={playerState =>
-              setVideoPlayerState(playerState)
-            }
-          />
-          <MultiRangeSlider
-            onSliderChange={([min, max]) => setSliderValues([min, max])}
-          />
-          {ffmpegLoaded && (
-            <VideoConversionButton
-              ffmpeg={ffmpeg}
-              sliderValues={sliderValues}
-              videoPlayerState={videoPlayerState}
-              videoFile={videoFile}
+    <>
+      <main>
+        <div className="main-header-container">
+          <h2>Video Edit</h2>
+          {videoFile && (
+            <CustomButton
+              onClick={deleteFile}
+              type={'contained'}
+              buttonName="Delete"
+              startIcon={<DeleteIcon />}
             />
           )}
-        </>
-      )}
-    </main>
+        </div>
+        {!videoFile ? (
+          <VideoPlaceholder
+            _onChange={file => {
+              addFile(file);
+            }}
+          />
+        ) : (
+          <>
+            <VideoPlayer
+              onPlayerChange={player => setVideoPlayer(player)}
+              onPlayerStateChange={playerState =>
+                setVideoPlayerState(playerState)
+              }
+            />
+            <div className="video-editing-container">
+              <div className="video-duration">
+                <p>
+                  시작:
+                  {videoPlayerState &&
+                    sliderValueToVideoTime(
+                      videoPlayerState.duration,
+                      sliderValues[0]
+                    )}
+                  초
+                </p>
+                <p>
+                  끝:
+                  {videoPlayerState &&
+                    sliderValueToVideoTime(
+                      videoPlayerState.duration,
+                      sliderValues[1]
+                    )}
+                  초
+                </p>
+              </div>
+              <div className="video-cutting-slider">
+                <ContentCutIcon />
+                <MultiRangeSlider
+                  onSliderChange={([min, max]) => setSliderValues([min, max])}
+                />
+              </div>
+            </div>
+            {ffmpegLoaded && (
+              <VideoConversionButton
+                ffmpeg={ffmpeg}
+                sliderValues={sliderValues}
+                videoPlayerState={videoPlayerState}
+                videoFile={videoFile}
+                onConversionStart={() => setProcessing(true)}
+                onConversionEnd={() => {
+                  setProcessing(false);
+                  setShowToast(true);
+                }}
+              />
+            )}
+          </>
+        )}
+      </main>
+      <LoadingModal show={processing} onHide={() => setProcessing(false)} />
+      <ToastBox
+        open={showToast}
+        onClose={() => setShowToast(false)}
+        text="내보내기가 완료되었습니다."
+      ></ToastBox>
+    </>
   );
 };
 

@@ -1,22 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
 
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0px;
-}
-
-#root {
-  width: 100%;
-}
-
 .App {
   display: flex;
   flex-direction: column;
+  font-family: 'Noto Sans KR', sans-serif;
   min-height: 100vh;
+  width: 100%;
+  background-color: #effaff;
+  color: #434343;
 }
 
 /* HEADER */
@@ -28,6 +19,19 @@ body {
   margin-bottom: 24px;
   padding-left: 20px;
   padding-right: 20px;
+  background-color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+
+.header h2 {
+  color: #1c548c;
+  font-weight: 600;
+}
+
+.header nav {
+  color: #1c548c;
 }
 
 .logo {
@@ -45,6 +49,11 @@ main {
   flex: 1;
   gap: 10px;
   padding: 0 240px;
+}
+
+main h2 {
+  color: #1c548c;
+  font-weight: 600;
 }
 
 .main-header-container {
@@ -76,6 +85,21 @@ main {
 .button-container {
   display: flex;
   gap: 10px;
+}
+
+.video-editing-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.video-cutting-slider {
+  display: flex;
+}
+
+.video-duration {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* FOOTER */

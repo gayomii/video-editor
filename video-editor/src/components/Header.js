@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <header className={'header'}>
       <div className={'logo'}>
-        <VideoSettingsIcon fontSize="large" />
+        <VideoSettingsIcon fontSize="large" sx={{ color: '#1c548c' }} />
         <h2>Gayeon's Video Editor</h2>
       </div>
       <nav>

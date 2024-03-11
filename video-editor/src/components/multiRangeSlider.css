@@ -3,6 +3,10 @@
   width: 100%;
 }
 
+.multi-range-slider {
+  margin-top: 8px;
+}
+
 .slider {
   position: relative;
   z-index: 1;

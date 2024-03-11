@@ -13,18 +13,35 @@ const VideoConversionButton = ({
   videoFile,
   videoPlayerState,
 }) => {
+  const writeFile = async inputFileName => {
+    return await ffmpeg.writeFile(
+      inputFileName,
+      await fetchFile(URL.createObjectURL(videoFile))
+    );
+  };
+
+  const getMinMaxTime = () => {
+    const [min, max] = sliderValues;
+    const minTime = sliderValueToVideoTime(videoPlayerState.duration, min);
+    const maxTime = sliderValueToVideoTime(videoPlayerState.duration, max);
+
+    return [minTime, maxTime];
+  };
+
+  const downloadFile = dataURL => {
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.setAttribute('download', '');
+    link.click();
+  };
+
   const convertToGif = async () => {
     // TODO: 파일 변환 & 다운로드 진행 시 Loading 모달 창
     const inputFileName = 'input.mp4';
     const outputFileName = 'output.gif';
 
-    await ffmpeg.writeFile(
-      inputFileName,
-      await fetchFile(URL.createObjectURL(videoFile))
-    );
-    const [min, max] = sliderValues;
-    const minTime = sliderValueToVideoTime(videoPlayerState.duration, min);
-    const maxTime = sliderValueToVideoTime(videoPlayerState.duration, max);
+    await writeFile(inputFileName);
+    const [minTime, maxTime] = getMinMaxTime();
 
     await ffmpeg.exec([
       '-i',
@@ -39,14 +56,11 @@ const VideoConversionButton = ({
     ]);
 
     const data = await ffmpeg.readFile(outputFileName);
-    const gifUrl = URL.createObjectURL(
+    const gifURL = URL.createObjectURL(
       new Blob([data.buffer], { type: 'image/gif' })
     );
 
-    const link = document.createElement('a');
-    link.href = gifUrl;
-    link.setAttribute('download', '');
-    link.click();
+    downloadFile(gifURL);
   };
 
   const onCutTheVideo = async () => {
@@ -55,14 +69,9 @@ const VideoConversionButton = ({
     const inputFileName = 'input.mp4';
     const outputFileName = 'output.mp4';
 
-    const [min, max] = sliderValues;
-    const minTime = sliderValueToVideoTime(videoPlayerState.duration, min);
-    const maxTime = sliderValueToVideoTime(videoPlayerState.duration, max);
+    await writeFile(inputFileName);
+    const [minTime, maxTime] = getMinMaxTime();
 
-    await ffmpeg.writeFile(
-      'input.mp4',
-      await fetchFile(URL.createObjectURL(videoFile))
-    );
     await ffmpeg.exec([
       '-i',
       `${inputFileName}`,
@@ -80,10 +89,34 @@ const VideoConversionButton = ({
       new Blob([data.buffer], { type: 'video/mp4' })
     );
 
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.setAttribute('download', '');
-    link.click();
+    downloadFile(dataURL);
+  };
+
+  const onExportAudio = async () => {
+    // TODO: 파일 변환 & 다운로드 진행 시 Loading 모달 창
+    const inputFileName = 'input.mp4';
+    const outputFileName = 'output.mp3';
+
+    await writeFile(inputFileName);
+    const [minTime, maxTime] = getMinMaxTime();
+
+    await ffmpeg.exec([
+      '-i',
+      `${inputFileName}`,
+      '-vn',
+      '-ss',
+      `${minTime}`,
+      '-t',
+      `${maxTime - minTime}`,
+      `${outputFileName}`,
+    ]);
+
+    const data = await ffmpeg.readFile(outputFileName);
+    const dataURL = await readFileAsBase64(
+      new Blob([data.buffer], { type: 'audio/mp3' })
+    );
+
+    downloadFile(dataURL);
   };
 
   return (
@@ -99,7 +132,7 @@ const VideoConversionButton = ({
         startIcon={<SaveAltIcon />}
       ></CustomButton>
       <CustomButton
-        onClick={() => console.log('음성 내보내기')}
+        onClick={onExportAudio}
         buttonName="음성 내보내기"
         startIcon={<VolumeUpIcon />}
       ></CustomButton>

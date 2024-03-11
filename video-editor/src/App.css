@@ -3,6 +3,7 @@
 .App {
   display: flex;
   flex-direction: column;
+  align-items: center;
   font-family: 'Noto Sans KR', sans-serif;
   min-height: 100vh;
   width: 100%;
@@ -17,8 +18,7 @@
   align-items: center;
   border-bottom: 1px solid #ececec;
   margin-bottom: 24px;
-  padding-left: 20px;
-  padding-right: 20px;
+  width: 100%;
   background-color: #fff;
   position: sticky;
   top: 0;
@@ -32,10 +32,11 @@
 
 .header nav {
   color: #1c548c;
+  padding: 5px 20px;
 }
 
 .logo {
-  margin: 5px;
+  padding: 5px 20px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -48,7 +49,7 @@ main {
   align-items: center;
   flex: 1;
   gap: 10px;
-  padding: 0 240px;
+  width: 80%;
 }
 
 main h2 {
@@ -107,10 +108,18 @@ footer {
   background-color: #434343;
   display: flex;
   justify-content: center;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
 }
 
 /* VIDEO PLAYER */
 .video-player {
   width: 100%;
+}
+
+@media (max-width: 768px) {
+  main {
+    width: 100%;
+  }
 }

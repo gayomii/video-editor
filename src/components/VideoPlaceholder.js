@@ -1,7 +1,7 @@
 import React from 'react';
 import video_placeholder from '../assets/video_placeholder.png';
 
-const VideoPlaceholder = ({ _onChange }) => {
+const VideoPlaceholder = ({ onChange }) => {
   return (
     <section className={'upload-layout'}>
       <label>
@@ -15,7 +15,7 @@ const VideoPlaceholder = ({ _onChange }) => {
           type="file"
           accept="video/*"
           onChange={e => {
-            _onChange(e.target.files[0]);
+            onChange(e.target.files[0]);
           }}
         />
       </label>

@@ -74,7 +74,7 @@ const VideoEditorMain = () => {
         </div>
         {!videoFile ? (
           <VideoPlaceholder
-            _onChange={file => {
+            onChange={file => {
               addFile(file);
             }}
           />

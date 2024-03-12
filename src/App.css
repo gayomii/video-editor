@@ -25,15 +25,23 @@
   z-index: 3;
 }
 
-.header h2 {
-  color: #1c548c;
-  font-weight: 600;
-  font-size: 24px;
-}
-
 .header nav {
   color: #1c548c;
   padding: 10px 20px;
+}
+
+.header nav ul {
+  display: flex;
+  gap: 10px;
+}
+
+.header nav ul li {
+  cursor: pointer;
+}
+
+.header nav ul li.disabled-menu {
+  cursor: default;
+  opacity: 0.7;
 }
 
 .logo {
@@ -95,15 +103,19 @@ main h2 {
   flex-direction: column;
   width: 100%;
   gap: 5px;
+  color: #1c548c;
 }
 
 .video-duration p {
-  color: #1c548c;
   opacity: 0.7;
 }
 
 .video-cutting-slider {
   display: flex;
+}
+
+.video-total-duration {
+  text-align: center;
 }
 
 .video-duration {
@@ -119,6 +131,7 @@ footer {
   padding-top: 10px;
   padding-bottom: 10px;
   width: 100%;
+  margin-top: 24px;
 }
 
 /* VIDEO PLAYER */

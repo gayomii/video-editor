@@ -62,12 +62,12 @@ const VideoEditorMain = () => {
     <>
       <main>
         <div className="main-header-container">
-          <h2>Video Edit</h2>
+          <h2>비디오 편집</h2>
           {videoFile && (
             <CustomButton
               onClick={deleteFile}
               type={'contained'}
-              buttonName="Delete"
+              buttonName="비디오 삭제"
               startIcon={<DeleteIcon />}
             />
           )}
@@ -87,6 +87,10 @@ const VideoEditorMain = () => {
               }
             />
             <div className="video-editing-container">
+              <p className="video-total-duration">
+                비디오 재생시간:{' '}
+                {videoPlayerState && Math.ceil(videoPlayerState.duration)}초
+              </p>
               <div className="video-duration">
                 <p>
                   시작:

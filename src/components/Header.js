@@ -5,11 +5,11 @@ const Header = () => {
     <header className={'header'}>
       <div className={'logo'}>
         <VideoSettingsIcon fontSize="large" sx={{ color: '#1c548c' }} />
-        <h2>Gayeon's Video Editor</h2>
       </div>
       <nav>
         <ul>
           <li>비디오 편집</li>
+          <li className="disabled-menu">이미지 편집</li>
         </ul>
       </nav>
     </header>

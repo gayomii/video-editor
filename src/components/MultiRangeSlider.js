@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './multiRangeSlider.css';
 
-const MultiRangeSliderTest = ({ onSliderChange }) => {
+const MultiRangeSlider = ({ onSliderChange }) => {
   const [minVal, setMinVal] = useState(0);
   const [maxVal, setMaxVal] = useState(100);
   const range = useRef(null);
@@ -59,4 +59,4 @@ const MultiRangeSliderTest = ({ onSliderChange }) => {
   );
 };
 
-export default MultiRangeSliderTest;
+export default MultiRangeSlider;

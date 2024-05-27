@@ -30,6 +30,7 @@
 
 ---
 
+```
 📦src
 ┣ 📂assets
 ┃ ┣ 📜github_icon.png
@@ -54,3 +55,4 @@
 ┣ 📜App.js
 ┣ 📜index.css
 ┗ 📜index.js
+```
